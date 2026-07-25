@@ -1,5 +1,4 @@
 package io.github.achyuki.folddevtools.ui.component
-import androidx.compose.ui.res.stringResource
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
@@ -8,6 +7,8 @@ import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import io.github.achyuki.folddevtools.R
 import io.github.achyuki.folddevtools.TAG
 import java.net.URI
 
@@ -35,7 +36,7 @@ class ConnectDialog {
                 Button(
                     onClick = {
                         show = false
-                        onConfirm(praseAddress(address))
+                        onConfirm(parseAddress(address))
                     },
                     enabled = address.isNotBlank()
                 ) {
@@ -52,7 +53,7 @@ class ConnectDialog {
         )
     }
 
-    fun praseAddress(address: String): Pair<String, Int>? = try {
+    fun parseAddress(address: String): Pair<String, Int>? = try {
         val uri = URI("http://$address")
         val host = uri.host
         val port = if (uri.port != -1) uri.port else null
