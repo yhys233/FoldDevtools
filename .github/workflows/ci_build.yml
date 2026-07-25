@@ -74,6 +74,10 @@ jobs:
           echo keyPassword='${{ secrets.KEY_STORE_PASSWORD }}' >> signing.properties
           echo ${{ secrets.KEY_DATA }} | base64 --decode > keystore.jks
 
+      - name: Setup keystore
+        run: |
+         echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
+
       - name: Build App Release
         run: |
           bash gradlew assembleRelease
