@@ -28,11 +28,11 @@ fun getGitShortHash(): String = runGitCommand("rev-parse", "--short", "HEAD") ?:
 
 android {
     namespace = "io.github.achyuki.folddevtools"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = getGitCommitCount()
         versionName = getGitShortHash()
     }
