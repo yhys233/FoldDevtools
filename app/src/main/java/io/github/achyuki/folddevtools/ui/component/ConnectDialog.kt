@@ -1,4 +1,5 @@
 package io.github.achyuki.folddevtools.ui.component
+import androidx.compose.ui.res.stringResource
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
@@ -20,12 +21,12 @@ class ConnectDialog {
 
         AlertDialog(
             onDismissRequest = { show = false },
-            title = { Text("Remote") },
+            title = { Text(stringResource(R.string.remote)) },
             text = {
                 OutlinedTextField(
                     value = address,
                     singleLine = true,
-                    label = { Text("Address") },
+                    label = { Text(stringResource(R.string.address)) },
                     onValueChange = { address = it },
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -38,14 +39,14 @@ class ConnectDialog {
                     },
                     enabled = address.isNotBlank()
                 ) {
-                    Text("Connect")
+                    Text(stringResource(R.string.connect))
                 }
             },
             dismissButton = {
                 TextButton(onClick = {
                     show = false
                 }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )

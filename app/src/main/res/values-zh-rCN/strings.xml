@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FoldDevtools</string>
+    <string name="settings">设置</string>
+    <string name="connect">连接</string>
+    <string name="remote_mode">远程模式</string>
+    <string name="root_mode">Root 模式</string>
+    <string name="debug_local_webview">使用 Root 权限调试本地 WebView</string>
+    <string name="debug_remote">仅通过远程访问调试</string>
+    <string name="force_enable_debugging">强制启用调试</string>
+    <string name="force_webview_debugging">通过 Xposed Hook 强制启用 WebView 调试</string>
+    <string name="devtools_entry_page">DevTools 入口页面</string>
+    <string name="server_binding_address">服务器绑定地址</string>
+    <string name="server_binding_port">服务器绑定端口</string>
+    <string name="local_floating_window">本地悬浮窗</string>
+    <string name="use_local_floating">对本地页面使用悬浮窗</string>
+    <string name="remote_floating_window">远程悬浮窗</string>
+    <string name="use_remote_floating">对远程页面使用悬浮窗</string>
+    <string name="external_browser">外部浏览器</string>
+    <string name="open_external_browser">使用外部浏览器打开 DevTools</string>
+    <string name="review_source">查看源码或提交问题</string>
+    <string name="remote">远程</string>
+    <string name="address">地址</string>
+    <string name="cancel">取消</string>
+    <string name="empty">  -_-#
+空</string>
+    <string name="connection_interrupted">连接中断</string>
+    <string name="attached">已连接</string>
+    <string name="visible">可见</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="get_packagename_error">获取包名错误</string>
+</resources>

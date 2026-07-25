@@ -55,7 +55,7 @@ fun SettingScreen(navigator: NavController) {
                 switchPreference(
                     key = "rootmode",
                     defaultValue = true,
-                    title = { Text(text = "Root mode") },
+                    title = { Text(text = stringResource(R.string.root_mode)) },
                     icon = {
                         Icon(imageVector = Icons.Outlined.Layers, contentDescription = null)
                     },
@@ -66,12 +66,12 @@ fun SettingScreen(navigator: NavController) {
                 switchPreference(
                     key = "xphook",
                     defaultValue = true,
-                    title = { Text(text = "Force enable debugging") },
+                    title = { Text(text = stringResource(R.string.force_enable_debugging)) },
                     icon = {
                         Icon(imageVector = Icons.Outlined.Healing, contentDescription = null)
                     },
                     summary = {
-                        Text(text = "Force-enable WebView debugging through xposed hook")
+                        Text(text = stringResource(R.string.force_webview_debugging))
                     }
                 )
                 val pages = listOf("<AUTO>", "devtools_app", "inspector", "js_app")
@@ -79,7 +79,7 @@ fun SettingScreen(navigator: NavController) {
                     key = "entrypage",
                     defaultValue = pages[0],
                     values = pages,
-                    title = { Text(text = "Devtools entry page") },
+                    title = { Text(text = stringResource(R.string.devtools_entry_page)) },
                     icon = {
                         Icon(imageVector = Icons.AutoMirrored.Outlined.Article, contentDescription = null)
                     },
@@ -89,7 +89,7 @@ fun SettingScreen(navigator: NavController) {
                 textFieldPreference(
                     key = "bindaddress",
                     defaultValue = "127.0.0.1",
-                    title = { Text(text = "Server binding address") },
+                    title = { Text(text = stringResource(R.string.server_binding_address)) },
                     textToValue = { it },
                     icon = {
                         Icon(imageVector = Icons.Outlined.Link, contentDescription = null)
@@ -99,7 +99,7 @@ fun SettingScreen(navigator: NavController) {
                 textFieldPreference(
                     key = "bindport",
                     defaultValue = 9223,
-                    title = { Text(text = "Server binding port") },
+                    title = { Text(text = stringResource(R.string.server_binding_port)) },
                     textToValue = {
                         try {
                             val port = it.toInt()
@@ -120,34 +120,34 @@ fun SettingScreen(navigator: NavController) {
                 switchPreference(
                     key = "localfloat",
                     defaultValue = true,
-                    title = { Text(text = "Local floating window") },
+                    title = { Text(text = stringResource(R.string.local_floating_window)) },
                     icon = {
                         Icon(imageVector = Icons.Outlined.ContentCopy, contentDescription = null)
                     },
                     summary = {
-                        Text(text = "Use floating windows for local pages")
+                        Text(text = stringResource(R.string.use_local_floating))
                     }
                 )
                 switchPreference(
                     key = "remotefloat",
                     defaultValue = false,
-                    title = { Text(text = "Remote floating window") },
+                    title = { Text(text = stringResource(R.string.remote_floating_window)) },
                     icon = {
                         Icon(imageVector = Icons.Outlined.ContentCopy, contentDescription = null)
                     },
                     summary = {
-                        Text(text = "Use floating windows for remote pages")
+                        Text(text = stringResource(R.string.use_remote_floating))
                     }
                 )
                 switchPreference(
                     key = "extbrowser",
                     defaultValue = false,
-                    title = { Text(text = "External browser") },
+                    title = { Text(text = stringResource(R.string.external_browser)) },
                     icon = {
                         Icon(imageVector = Icons.Outlined.ArrowOutward, contentDescription = null)
                     },
                     summary = {
-                        Text(text = "Open devtools using the external browser")
+                        Text(text = stringResource(R.string.open_external_browser))
                     }
                 )
                 preference(
