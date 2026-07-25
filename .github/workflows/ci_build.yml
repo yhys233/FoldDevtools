@@ -7,11 +7,14 @@ on:
   pull_request:
     branches: [ main ]
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
     name: CI Build
+
     steps:
+
       - name: Checkout Repo
         uses: actions/checkout@v5
         with:
@@ -24,10 +27,12 @@ jobs:
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
           echo "$GITHUB_WORKSPACE/depot_tools" >> $GITHUB_PATH
 
+
       - name: Checkout devtools-frontend
         run: |
           git clone --depth=1 https://chromium.googlesource.com/devtools/devtools-frontend
           gclient config https://chromium.googlesource.com/devtools/devtools-frontend --unmanaged
+
 
       - name: Build devtools-frontend
         run: |
@@ -36,6 +41,7 @@ jobs:
           gclient sync
           vpython3 third_party/node/node.py --output scripts/run_build.mjs
         working-directory: devtools-frontend
+
 
       - name: Minify devtools-frontend
         run: |
@@ -51,68 +57,83 @@ jobs:
             -name "Tests.js" \
             -name "tests.txt" \
           \) -exec rm -f {} +
+
           mv devtools-frontend/out/Default/gen/front_end app/src/main/assets/devtools-frontend
 
 
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          distribution: temurin
+          java-version: 21
+
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
         with:
           cache-overwrite-existing: true
 
-      - name: Create Sign File
-        run: |
-          touch signing.properties
-          echo storeFile=../keystore.jks >> signing.properties
-          echo storePassword=${{ secrets.KEY_STORE_PASSWORD }} >> signing.properties
-          echo keyAlias=${{ secrets.KEY_ALIAS }} >> signing.properties
-          echo keyPassword='${{ secrets.KEY_STORE_PASSWORD }}' >> signing.properties
-          echo ${{ secrets.KEY_DATA }} | base64 --decode > keystore.jks
 
       - name: Setup keystore
         run: |
-         echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
+
 
       - name: Build App Release
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           bash gradlew assembleRelease
 
+
       - name: Build App Debug
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           bash gradlew assembleDebug
+
 
       - name: Find APKs
         run: |
           echo "APK_FILE_RELEASE=$(find app/build/outputs/apk/release -name '*.apk')" >> $GITHUB_ENV
           echo "APK_FILE_DEBUG=$(find app/build/outputs/apk/debug -name '*.apk')" >> $GITHUB_ENV
-  
+
+
       - name: Show Artifacts Summary
         run: |
           echo "### Build Success :rocket:" >> $GITHUB_STEP_SUMMARY
+
           frontend=(${{ env.FRONTEND_GIT_HASH }})
           echo "Devtools-frontend Git Hash: $frontend" >> $GITHUB_STEP_SUMMARY
+
           echo "|ABI|SHA256|" >> $GITHUB_STEP_SUMMARY
           echo "|:--------:|:----------|" >> $GITHUB_STEP_SUMMARY
+
           release=($(sha256sum ${{ env.APK_FILE_RELEASE }}))
-          echo "|Release|$release" >> $GITHUB_STEP_SUMMARY
+          echo "|Release|$release|" >> $GITHUB_STEP_SUMMARY
+
           debug=($(sha256sum ${{ env.APK_FILE_DEBUG }}))
-          echo "|Debug|$debug" >> $GITHUB_STEP_SUMMARY
+          echo "|Debug|$debug|" >> $GITHUB_STEP_SUMMARY
+
 
       - name: Upload Artifacts Release
         uses: actions/upload-artifact@v4
         with:
           name: FoldDevtools-release-${{ github.event.head_commit.id }}
           path: ${{ env.APK_FILE_RELEASE }}
+
+
       - name: Upload Artifacts Debug
         uses: actions/upload-artifact@v4
         with:
           name: FoldDevtools-debug-${{ github.event.head_commit.id }}
           path: ${{ env.APK_FILE_DEBUG }}
+
+
       - name: Upload Artifacts Frontend
         uses: actions/upload-artifact@v4
         with:
